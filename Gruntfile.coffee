@@ -31,8 +31,10 @@ module.exports = (grunt)->
         singleRun: true
 
     nodemon:
-      server:
-        dev: {}  # runs file in main property of package.json
+      dev:
+        script: 'server.js'
+      # server:
+      #   dev: {}  # runs file in main property of package.json
 
     stylus:
       compile:
@@ -41,12 +43,31 @@ module.exports = (grunt)->
           'app/css/bootstrap.css': 'src/stylus/bootstrap/bootstrap.styl'  # 1:1 compile
           'app/css/responsive.css': 'src/stylus/bootstrap/responsive.styl'  # 1:1 compile
 
+    jade:
+      compile:
+        options:
+          data:
+            debug: false
+        files: [ {
+          expand: true
+          src: "**/*.jade"
+          dest: "app/partials/"
+          cwd: "src/partials"
+          ext: '.html'
+        } ]
+
+
     watch:
       coffee:
         files: ['src/coffee/angular/*', 'src/coffee/node/*']
         tasks: ['coffee']
         options:
           livereload: true  # default port 35729
+      jade:
+        files: ['src/partials/*']
+        tasks: ['jade']
+        options:
+          livereload: true
       mycss:
         files: ['src/stylus/*', 'src/stylus/bootstrap/*']
         tasks: ['stylus']
@@ -56,6 +77,7 @@ module.exports = (grunt)->
         files: ['app/*.html', 'app/partials/*.html', 'app/img/*.*']
         options:
           livereload: true  # default port 35729
+
 
 #     uglify:
 #       options:
@@ -78,16 +100,17 @@ module.exports = (grunt)->
 #           document: true
 
   grunt.loadNpmTasks 'grunt-contrib-coffee'
+  grunt.loadNpmTasks 'grunt-contrib-jade'
   grunt.loadNpmTasks 'grunt-contrib-stylus'
   grunt.loadNpmTasks 'grunt-contrib-watch'
-  grunt.loadNpmTasks 'grunt-nodemon'
-  grunt.loadNpmTasks 'grunt-exec'
   grunt.loadNpmTasks 'grunt-concurrent'
+  grunt.loadNpmTasks 'grunt-exec'
   grunt.loadNpmTasks 'grunt-karma'
+  grunt.loadNpmTasks 'grunt-nodemon'
   # grunt.loadNpmTasks 'grunt-contrib-uglify'
   # grunt.loadNpmTasks 'grunt-contrib-jshint'
   # grunt.loadNpmTasks 'grunt-contrib-qunit'
   # grunt.loadNpmTasks 'grunt-contrib-concat'
 
-  grunt.registerTask 'default', ['coffee', 'stylus', 'exec:notify', 'concurrent:server_watch']
-  grunt.registerTask 'test', ['coffee', 'stylus', 'concurrent:test_server']
+  grunt.registerTask 'default', ['coffee', 'stylus', 'jade', 'exec:notify', 'concurrent:server_watch']
+  grunt.registerTask 'test', ['coffee', 'stylus', 'jade', 'concurrent:test_server']
