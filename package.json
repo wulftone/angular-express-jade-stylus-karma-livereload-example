@@ -1,9 +1,9 @@
 {
-  "name": "seed",
+  "name": "angular-express-jade-stylus-karma-livereload-example",
   "version": "0.1.0",
   "repository": {
     "type": "git",
-    "url": "http://boop.com/"
+    "url": "git@github.com:wulftone/angular-express-jade-stylus-karma-livereload-example.git"
   },
   "dependencies": {
     "express": "*"
