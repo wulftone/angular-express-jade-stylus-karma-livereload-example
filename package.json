@@ -17,7 +17,7 @@
     "grunt-karma": "*",
     "grunt-concurrent": "*",
     "grunt-nodemon": "*",
-    "grunt-exec": "*"---,
+    "grunt-exec": "*",
     "grunt-contrib-jade": "^0.11.0"
   }
 }
